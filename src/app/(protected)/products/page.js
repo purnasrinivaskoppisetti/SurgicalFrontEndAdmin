@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Products from "@/components/products/Allproducts";
+import Products from "@/components/products/AllProducts";
 import useProducts from "@/hooks/products/useProducts";
 
 export default function ProductsPage() {
