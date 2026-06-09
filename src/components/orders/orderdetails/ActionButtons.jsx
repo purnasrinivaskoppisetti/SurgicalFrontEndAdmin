@@ -4,7 +4,7 @@ import {
     CheckCircle,
     XCircle,
     FileText,
-    MessageCircle,
+    Bike,
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -14,18 +14,23 @@ export default function ActionButtons({
     setOpenInvoice,
     handleUpdateOrderStatus,
 }) {
+    const status =
+        order?.status?.toLowerCase() || "";
+
     const updateStatus = async (
-        status,
+        newStatus,
         message
     ) => {
         try {
             await handleUpdateOrderStatus(
                 order.id,
-                status
+                newStatus
             );
 
             toast.success(message);
         } catch (error) {
+            console.error(error);
+
             toast.error(
                 "Failed to update order status"
             );
@@ -34,6 +39,7 @@ export default function ActionButtons({
 
     return (
         <div className="grid grid-cols-2 gap-3 pb-8">
+            {/* PACKED */}
             <button
                 onClick={() =>
                     updateStatus(
@@ -42,15 +48,15 @@ export default function ActionButtons({
                     )
                 }
                 disabled={
-                    order.status !==
-                    "pending"
+                    status !== "confirmed"
                 }
-                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold disabled:opacity-50"
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
             >
-                <Package size={19} />
+                <Package size={18} />
                 Mark packed
             </button>
 
+            {/* SHIPPED */}
             <button
                 onClick={() =>
                     updateStatus(
@@ -59,32 +65,50 @@ export default function ActionButtons({
                     )
                 }
                 disabled={
-                    order.status !==
-                    "packed"
+                    status !== "packed"
                 }
-                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold disabled:opacity-50"
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
             >
-                <Truck size={19} />
+                <Truck size={18} />
                 Mark shipped
             </button>
 
+            {/* OUT FOR DELIVERY */}
+            <button
+                onClick={() =>
+                    updateStatus(
+                        "out_for_delivery",
+                        "Order marked as out for delivery"
+                    )
+                }
+                disabled={
+                    status !== "shipped"
+                }
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
+            >
+                <Bike size={18} />
+                Out for delivery
+            </button>
+
+            {/* DELIVERED */}
             <button
                 onClick={() =>
                     updateStatus(
                         "delivered",
-                        "Order marked as delivered"
+                        "Order delivered successfully"
                     )
                 }
                 disabled={
-                    order.status !==
-                    "shipped"
+                    status !==
+                    "out_for_delivery"
                 }
-                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold disabled:opacity-50"
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
             >
-                <CheckCircle size={19} />
+                <CheckCircle size={18} />
                 Delivered
             </button>
 
+            {/* CANCEL */}
             <button
                 onClick={() =>
                     updateStatus(
@@ -93,31 +117,26 @@ export default function ActionButtons({
                     )
                 }
                 disabled={
-                    order.status ===
+                    status ===
                         "cancelled" ||
-                    order.status ===
-                        "delivered"
+                    status === "delivered"
                 }
-                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold text-red-500 disabled:opacity-50"
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold text-red-500 disabled:opacity-50"
             >
-                <XCircle size={19} />
+                <XCircle size={18} />
                 Cancel
             </button>
 
+            {/* INVOICE */}
             <button
                 onClick={() =>
                     setOpenInvoice(true)
                 }
-                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold"
+                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold"
             >
-                <FileText size={19} />
+                <FileText size={18} />
                 Invoice
             </button>
-
-            {/* <button className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-[10px] font-semibold">
-                <MessageCircle size={19} />
-                WhatsApp
-            </button> */}
         </div>
     );
 }

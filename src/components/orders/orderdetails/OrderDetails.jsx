@@ -23,10 +23,11 @@ export default function OrderDetailsDrawer({
         useState(false);
 
     const orderStatus =
-        order?.status || "pending";
+        order?.status?.toLowerCase() ||
+        "confirmed";
 
     const statusMap = {
-        pending: 0,
+        confirmed: 0,
         packed: 1,
         shipped: 2,
         out_for_delivery: 3,

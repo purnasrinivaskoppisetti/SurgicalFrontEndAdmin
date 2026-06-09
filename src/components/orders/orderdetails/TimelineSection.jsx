@@ -23,26 +23,24 @@ export default function TimelineSection({
                             className="relative flex items-center gap-5 mb-5"
                         >
                             <span
-                                className={`h-4 w-4 rounded-full border-4 z-10 ${
-                                    isActive
+                                className={`h-4 w-4 rounded-full border-4 z-10 ${isActive
                                         ? "bg-emerald-500 border-emerald-500"
                                         : index === 0 &&
-                                          orderStatus ===
-                                              "cancelled"
-                                        ? "bg-emerald-500 border-emerald-500"
-                                        : "bg-white border-slate-200"
-                                }`}
+                                            orderStatus ===
+                                            "cancelled"
+                                            ? "bg-emerald-500 border-emerald-500"
+                                            : "bg-white border-slate-200"
+                                    }`}
                             />
 
                             <span
-                                className={`text-[10px] ${
-                                    isActive ||
-                                    (index === 0 &&
-                                        orderStatus ===
+                                className={`text-[10px] ${isActive ||
+                                        (index === 0 &&
+                                            orderStatus ===
                                             "cancelled")
                                         ? "text-[#020617]"
                                         : "text-slate-500"
-                                }`}
+                                    }`}
                             >
                                 {step}
                             </span>
