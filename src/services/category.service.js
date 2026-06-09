@@ -9,6 +9,18 @@ export const getCategories = async () => {
   return response.data;
 };
 
+export const updateCategory = async (
+  categoryId,
+  payload
+) => {
+  const response = await axiosInstance.put(
+    API_ROUTES.CATEGORIES.UPDATE(categoryId),
+    payload
+  );
+
+  return response.data;
+};
+
 export const deleteCategory = async (categoryId) => {
   const response = await axiosInstance.delete(
     API_ROUTES.CATEGORIES.DELETE(categoryId)

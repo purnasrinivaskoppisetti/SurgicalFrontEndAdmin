@@ -5,6 +5,7 @@ export const API_ROUTES = {
 
     CATEGORIES: {
         LIST: "/admin/categories",
+        UPDATE: (id) => `/admin/categories/${id}`,
         DELETE: (id) => `/admin/categories/${id}`,
         MASTER: "/admin/category-master",
     },
