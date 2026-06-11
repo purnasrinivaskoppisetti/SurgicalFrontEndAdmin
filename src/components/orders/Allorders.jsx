@@ -1,29 +1,32 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import {  useState,useRef, useEffect } from "react";
 
 import { Search, Download, Plus, Truck, CheckCircle, Package, IndianRupee, MoreVertical, Filter, ChevronDown, Check, } from "lucide-react";
 export default function AllOrders({
     orders,
     loading,
+    summary,
+    pagination,
+
     search,
     setSearch,
+
     deliveryFilter,
     setDeliveryFilter,
+
     paymentFilter,
     setPaymentFilter,
+
     onOrderClick,
 }) {
-
     const [showDeliveryDropdown, setShowDeliveryDropdown] =
         useState(false);
 
     const [showPaymentDropdown, setShowPaymentDropdown] =
         useState(false);
-
     const deliveryRef = useRef(null);
     const paymentRef = useRef(null);
-
     const deliveryOptions = [
         "All deliveries",
         "Pending",
@@ -41,7 +44,6 @@ export default function AllOrders({
         "Failed",
         "Refunded",
     ];
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -78,21 +80,10 @@ export default function AllOrders({
                     </h1>
 
                     <p className="text-sm text-slate-500 mt-2">
-                        28 total orders · 5 showing
+                        {summary?.total_orders || 0} total orders ·{" "}
+                        {orders?.length || 0} showing
                     </p>
                 </div>
-
-                {/* <div className="flex gap-3">
-                    <button className="h-10 px-4 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center gap-2 text-sm font-medium hover:bg-slate-50">
-                        <Download size={16} />
-                        Export CSV
-                    </button> */}
-
-                    {/* <button className="h-10 px-4 bg-emerald-500 text-white rounded-xl shadow-md flex items-center gap-2 text-sm font-medium hover:bg-emerald-600">
-                        <Plus size={16} />
-                        New Order
-                    </button> */}
-                {/* </div> */}
             </div>
 
             {/* Stats Cards */}
@@ -104,15 +95,10 @@ export default function AllOrders({
                         </p>
 
                         <h2 className="text-[20px] font-bold text-slate-900 mt-1">
-                            ₹55.4k
+                            ₹{Number(
+                                summary?.revenue || 0
+                            ).toLocaleString("en-IN")}
                         </h2>
-
-                        <p className="mt-3 text-xs text-slate-500">
-                            <span className="text-emerald-500 font-semibold">
-                                ↑ +12%
-                            </span>{" "}
-                            vs yesterday
-                        </p>
                     </div>
 
                     <div className="w-9 h-9 rounded-2xl bg-blue-100 flex items-center justify-center">
@@ -128,9 +114,8 @@ export default function AllOrders({
                         <p className="text-[11px] uppercase font-semibold text-slate-500">
                             Pending
                         </p>
-
                         <h2 className="text-[20px] font-bold mt-1">
-                            3
+                            {summary?.pending || 0}
                         </h2>
                     </div>
 
@@ -149,7 +134,7 @@ export default function AllOrders({
                         </p>
 
                         <h2 className="text-[20px] font-bold mt-1">
-                            8
+                            {summary?.in_transit || 0}
                         </h2>
                     </div>
 
@@ -168,7 +153,7 @@ export default function AllOrders({
                         </p>
 
                         <h2 className="text-[20px] font-bold mt-1">
-                            8
+                            {summary?.delivered || 0}
                         </h2>
                     </div>
 

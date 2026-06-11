@@ -9,6 +9,9 @@ export default function OrdersPage() {
     const {
         orders,
         loading,
+        pagination,
+        summary,
+
         fetchOrders,
 
         selectedOrderDetails,
@@ -61,13 +64,25 @@ export default function OrdersPage() {
             <AllOrders
                 orders={orders}
                 loading={loading}
+                summary={summary}
+                pagination={pagination}
+
                 search={search}
                 setSearch={setSearch}
+
                 deliveryFilter={deliveryFilter}
-                setDeliveryFilter={setDeliveryFilter}
+                setDeliveryFilter={
+                    setDeliveryFilter
+                }
+
                 paymentFilter={paymentFilter}
-                setPaymentFilter={setPaymentFilter}
-                onOrderClick={handleOpenOrderDetails}
+                setPaymentFilter={
+                    setPaymentFilter
+                }
+
+                onOrderClick={
+                    handleOpenOrderDetails
+                }
             />
 
             <OrderDetailsDrawer

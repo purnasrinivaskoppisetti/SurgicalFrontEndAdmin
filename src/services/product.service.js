@@ -32,6 +32,22 @@ export const getProducts = async ({
     }
 };
 
+export const getProductById = async (id) => {
+    try {
+        const response = await axiosInstance.get(
+            API_ROUTES.PRODUCTS.DETAILS(id)
+        );
+
+        return response.data;
+    } catch (error) {
+        throw (
+            error?.response?.data || {
+                message: "Failed to fetch product details",
+            }
+        );
+    }
+};
+
 export const createProduct = async (payload) => {
     try {
         const formData = new FormData();

@@ -8,7 +8,7 @@ export default function SettingsPage() {
     settings,
     loading,
     handleUpdateSettings,
-  } = useSettings();
+  } = useSettings();Remove-Item .next -Recurse -Force
 
   return (
     <Settings

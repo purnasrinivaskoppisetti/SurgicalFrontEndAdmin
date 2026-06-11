@@ -48,11 +48,13 @@ export default function ActionButtons({
                     )
                 }
                 disabled={
-                    status !== "confirmed"
+                    !["pending", "confirmed"].includes(
+                        status
+                    )
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold disabled:opacity-50"
             >
-                <Package size={18} />
+                <Package size={15} />
                 Mark packed
             </button>
 
@@ -67,9 +69,9 @@ export default function ActionButtons({
                 disabled={
                     status !== "packed"
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold disabled:opacity-50"
             >
-                <Truck size={18} />
+                <Truck size={15} />
                 Mark shipped
             </button>
 
@@ -84,9 +86,9 @@ export default function ActionButtons({
                 disabled={
                     status !== "shipped"
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold disabled:opacity-50"
             >
-                <Bike size={18} />
+                <Bike size={15} />
                 Out for delivery
             </button>
 
@@ -102,9 +104,9 @@ export default function ActionButtons({
                     status !==
                     "out_for_delivery"
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold disabled:opacity-50"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold disabled:opacity-50"
             >
-                <CheckCircle size={18} />
+                <CheckCircle size={15} />
                 Delivered
             </button>
 
@@ -118,12 +120,12 @@ export default function ActionButtons({
                 }
                 disabled={
                     status ===
-                        "cancelled" ||
+                    "cancelled" ||
                     status === "delivered"
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold text-red-500 disabled:opacity-50"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold text-red-500 disabled:opacity-50"
             >
-                <XCircle size={18} />
+                <XCircle size={15} />
                 Cancel
             </button>
 
@@ -132,9 +134,9 @@ export default function ActionButtons({
                 onClick={() =>
                     setOpenInvoice(true)
                 }
-                className="h-12 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-sm font-semibold"
+                className="h-9 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center gap-3 text-xs font-semibold"
             >
-                <FileText size={18} />
+                <FileText size={15} />
                 Invoice
             </button>
         </div>

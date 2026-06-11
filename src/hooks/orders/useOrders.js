@@ -35,6 +35,16 @@ export default function useOrders() {
             total: 0,
         });
 
+    const [summary, setSummary] =
+        useState({
+            total_orders: 0,
+            revenue: 0,
+            pending: 0,
+            in_transit: 0,
+            delivered: 0,
+            cancelled: 0,
+        });
+
     const fetchOrders = useCallback(
         async ({
             page = 1,
@@ -55,16 +65,36 @@ export default function useOrders() {
                         payment_status,
                     });
 
+                const data =
+                    response?.data || {};
+
                 const ordersData =
-                    response?.data
-                        ?.orders || [];
+                    data.orders || [];
 
                 setOrders(ordersData);
 
+                setSummary(
+                    data.summary || {
+                        total_orders: 0,
+                        revenue: 0,
+                        pending: 0,
+                        in_transit: 0,
+                        delivered: 0,
+                        cancelled: 0,
+                    }
+                );
+
                 setPagination({
-                    page,
-                    page_size,
+                    page:
+                        data.pagination
+                            ?.page || page,
+                    page_size:
+                        data.pagination
+                            ?.page_size ||
+                        page_size,
                     total:
+                        data.pagination
+                            ?.total ||
                         ordersData.length,
                 });
 
@@ -117,13 +147,11 @@ export default function useOrders() {
                 status
             ) => {
                 try {
-                    // Update status
                     await updateOrderStatus(
                         orderId,
                         status
                     );
 
-                    // Fetch latest order details
                     const latestOrder =
                         await getOrderDetails(
                             orderId
@@ -134,7 +162,6 @@ export default function useOrders() {
                             null
                     );
 
-                    // Update order list
                     setOrders(
                         (prev) =>
                             prev.map(
@@ -165,6 +192,7 @@ export default function useOrders() {
         orders,
         loading,
         pagination,
+        summary,
         fetchOrders,
 
         selectedOrderDetails,

@@ -1,190 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 export default function EditProductModal({
     categories = [],
     openEditModal,
     setOpenEditModal,
-    selectedProduct,
-    handleUpdateProduct,
+    formData,
+    saving,
+    handleChange,
+    handleImageFileChange,
+    addImageField,
+    removeImageField,
+    toggleSwitch,
+    handleSubmit,
 }) {
-    const fileInputRef = useRef(null);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        category_id: "",
-        brand: "",
-        mrp: "",
-        salePrice: "",
-        stock: "",
-        sku: "",
-        image: "",
-        imageFile: null,
-        tags: "",
-        status: "",
-
-        bestseller: false,
-        featured: false,
-        doctorPick: false,
-        newArrival: false,
-    });
-    const [saving, setSaving] = useState(false);
-    useEffect(() => {
-        if (!selectedProduct) return;
-
-        setFormData({
-            name: selectedProduct.name ?? "",
-            description:
-                selectedProduct.description ?? "",
-
-            category_id:
-                selectedProduct.category_id ?? "",
-
-            brand:
-                selectedProduct.brand ?? "",
-
-            mrp:
-                String(selectedProduct.mrp ?? ""),
-
-            salePrice:
-                String(
-                    selectedProduct.sale_price ?? ""
-                ),
-
-            stock:
-                String(
-                    selectedProduct.stock_qty ?? ""
-                ),
-
-            sku:
-                selectedProduct.sku ?? "",
-
-            image:
-                selectedProduct.thumbnail_url ?? "",
-
-            imageFile: null,
-
-            tags: "",
-
-            status:
-                Number(
-                    selectedProduct.stock_qty ?? 0
-                ) > 0
-                    ? "Active"
-                    : "Out of stock",
-
-            bestseller:
-                selectedProduct.is_bestseller ??
-                false,
-
-            featured:
-                selectedProduct.is_featured ??
-                false,
-
-            doctorPick: false,
-
-            newArrival:
-                selectedProduct.is_new_arrival ??
-                false,
-        });
-    }, [selectedProduct]);
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleImageChoose = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleImageFileChange = (e) => {
-        const file = e.target.files[0];
-
-        if (!file) return;
-
-        setFormData({
-            ...formData,
-            image: file.name,
-            imageFile: file,
-        });
-    };
-
-    const toggleSwitch = (field) => {
-        setFormData({
-            ...formData,
-            [field]: !formData[field],
-        });
-    };
-    const handleSubmit = async () => {
-        try {
-            setSaving(true);
-
-            const response =
-                await handleUpdateProduct(
-                    selectedProduct.id,
-                    {
-                        category_id:
-                            formData.category_id,
-
-                        name: formData.name,
-
-                        sku: formData.sku,
-
-                        brand: formData.brand,
-
-                        description:
-                            formData.description,
-
-                        short_description:
-                            formData.description,
-
-                        mrp: formData.mrp,
-
-                        sale_price:
-                            formData.salePrice,
-
-                        stock_qty:
-                            formData.stock,
-
-                        manufacturer: "",
-
-                        hsn_code: "",
-
-                        is_featured:
-                            formData.featured,
-
-                        is_bestseller:
-                            formData.bestseller,
-
-                        is_new_arrival:
-                            formData.newArrival,
-
-                        images:
-                            formData.imageFile
-                                ? [
-                                    formData.imageFile,
-                                ]
-                                : [],
-                    }
-                );
-
-            alert(response.message);
-
-            setOpenEditModal(false);
-        } catch (error) {
-            alert(
-                error?.message ||
-                error?.detail
-            );
-        } finally {
-            setSaving(false);
-        }
-    };
+    console.log("Edit formData:", formData);
     if (!openEditModal) return null;
 
     return (
@@ -277,7 +109,7 @@ export default function EditProductModal({
 
                     <div>
                         <label className="text-sm font-semibold text-[#0f172a]">
-                            MRP (1000)
+                            MRP
                         </label>
 
                         <input
@@ -291,7 +123,7 @@ export default function EditProductModal({
 
                     <div>
                         <label className="text-sm font-semibold text-[#0f172a]">
-                            Sale price (1500)
+                            Sale price
                         </label>
 
                         <input
@@ -326,78 +158,94 @@ export default function EditProductModal({
                             type="text"
                             name="sku"
                             value={formData.sku || ""}
-                            onChange={handleChange}
-                            className="w-full mt-2 h-9 border border-gray-300 rounded-xl px-4 text-sm outline-none"
+                            readOnly
+                            className="w-full mt-2 h-9 border border-gray-300 rounded-xl px-4 text-sm bg-gray-100 cursor-not-allowed"
                         />
                     </div>
 
-                    <div className="col-span-2">
+                    <div>
                         <label className="text-sm font-semibold text-[#0f172a]">
-                            choose image file
-                        </label>
-
-                        <div className="flex items-center gap-2 mt-2">
-                            <input
-                                type="text"
-                                name="image"
-                                value={formData.image || ""}
-                                onChange={handleChange}
-                                className="w-small h-9 border border-gray-300 rounded-xl px-4 text-sm outline-none"
-                            />
-
-                            <button
-                                type="button"
-                                onClick={handleImageChoose}
-                                className="px-4 h-9 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-medium shadow-sm transition"
-                            >
-                                Choose
-                            </button>
-
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageFileChange}
-                                className="hidden"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="col-span-2">
-                        <label className="text-sm font-semibold text-[#0f172a]">
-                            Tags
+                            Manufacturer
                         </label>
 
                         <input
                             type="text"
-                            name="tags"
-                            value={formData.tags || ""}
-                            onChange={handleChange}
-                            placeholder="bp, monitor, omron"
-                            className="w-full mt-2 h-9 border border-gray-300 rounded-xl px-4 text-sm outline-none"
+                            name="manufacturer"
+                            value={formData.manufacturer || ""}
+                            readOnly
+                            className="w-full mt-2 h-9 border border-gray-300 rounded-xl px-4 text-sm bg-gray-100 cursor-not-allowed"
                         />
                     </div>
 
-                    <div className="flex items-end gap-4">
-                        <div className="flex-1">
-                            <label className="text-sm font-semibold text-[#0f172a]">
-                                Status
-                            </label>
+                    <div>
+                        <label className="text-sm font-semibold text-[#0f172a]">
+                            HSN Code
+                        </label>
 
-                            <select
-                                name="status"
-                                value={formData.status || ""}
-                                onChange={handleChange}
-                                className="w-full mt-2 h-10 border border-gray-300 rounded-xl px-4 text-sm outline-none"
+                        <input
+                            type="text"
+                            name="hsn_code"
+                            value={formData.hsn_code || ""}
+                            readOnly
+                            className="w-full mt-2 h-9 border border-gray-300 rounded-xl px-4 text-sm bg-gray-100 cursor-not-allowed"
+                        />
+                    </div>
+                    <div className="col-span-2">
+                        <label className="text-sm font-semibold text-[#0f172a]">
+                            Product Images
+                        </label>
+
+                        <div className="mt-2 space-y-2">
+                            {formData.images?.map(
+                                (image, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <div className="flex-1 rounded-md px-2 py-2 border border-gray-200 bg-gray-100">
+                                            <div className="flex items-center gap-3">
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={(e) =>
+                                                        handleImageFileChange(
+                                                            index,
+                                                            e
+                                                        )
+                                                    }
+                                                    className="text-sm file:border file:border-gray-300 file:rounded file:px-2 file:py-1 file:bg-white file:cursor-pointer"
+                                                />
+
+                                                <img
+                                                    src={image.image_url}
+                                                    alt="Product"
+                                                    className="w-12 h-12 object-cover rounded border"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                removeImageField(
+                                                    index
+                                                )
+                                            }
+                                            className="w-10 h-6 border border-gray-400 rounded-md"
+                                        >
+                                            -
+                                        </button>
+                                    </div>
+                                )
+                            )}
+
+                            <button
+                                type="button"
+                                onClick={addImageField}
+                                className="px-2 py-2 border border-gray-400 rounded-md text-[11px] font-semibold hover:bg-gray-50"
                             >
-                                <option>Active</option>
-                                <option>Out of stock</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-
-                        <div className="pb-1 text-xs text-gray-500">
-                            Discount: 0%
+                                Add File
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -406,7 +254,6 @@ export default function EditProductModal({
                     {[
                         ["bestseller", "Bestseller"],
                         ["featured", "Featured"],
-                        ["doctorPick", "Doctor pick"],
                         ["newArrival", "New arrival"],
                     ].map(([key, label]) => (
                         <div
