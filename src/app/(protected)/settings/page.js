@@ -8,15 +8,13 @@ export default function SettingsPage() {
     settings,
     loading,
     handleUpdateSettings,
-  } = useSettings();Remove-Item .next -Recurse -Force
+  } = useSettings();
 
   return (
     <Settings
       settings={settings}
       loading={loading}
-      handleUpdateSettings={
-        handleUpdateSettings
-      }
+      handleUpdateSettings={handleUpdateSettings}
     />
   );
 }
