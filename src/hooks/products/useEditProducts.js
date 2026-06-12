@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function useEditProduct({
     selectedProduct,
@@ -12,6 +13,7 @@ export default function useEditProduct({
     const [formData, setFormData] = useState({
         name: "",
         description: "",
+        short_description: "",
         category_id: "",
         brand: "",
         mrp: "",
@@ -32,19 +34,15 @@ export default function useEditProduct({
 
     useEffect(() => {
         if (!selectedProduct) return;
-        console.log(
-            "selectedProduct FULL",
-            JSON.stringify(
-                selectedProduct,
-                null,
-                2
-            )
-        );
 
         setFormData({
             name: selectedProduct.name ?? "",
+
             description:
                 selectedProduct.description ?? "",
+
+            short_description:
+                selectedProduct.short_description ?? "",
 
             category_id:
                 selectedProduct.category_id ?? "",
@@ -68,33 +66,32 @@ export default function useEditProduct({
                 selectedProduct.sku ?? "",
 
             manufacturer:
-                selectedProduct.manufacturer ??
-                "",
+                selectedProduct.manufacturer ?? "",
 
             hsn_code:
                 selectedProduct.hsn_code ?? "",
 
-            images: selectedProduct.images || [],
+            images:
+                selectedProduct.images || [],
+
             imageFiles: [],
 
             bestseller:
-                selectedProduct.is_bestseller ??
-                false,
+                selectedProduct.is_bestseller ?? false,
 
             featured:
-                selectedProduct.is_featured ??
-                false,
+                selectedProduct.is_featured ?? false,
 
             newArrival:
-                selectedProduct.is_new_arrival ??
-                false,
+                selectedProduct.is_new_arrival ?? false,
         });
     }, [selectedProduct]);
 
     const handleChange = (e) => {
         setFormData((prev) => ({
             ...prev,
-            [e.target.name]: e.target.value,
+            [e.target.name]:
+                e.target.value,
         }));
     };
 
@@ -102,7 +99,8 @@ export default function useEditProduct({
         index,
         e
     ) => {
-        const file = e.target.files?.[0];
+        const file =
+            e.target.files?.[0];
 
         if (!file) return;
 
@@ -123,16 +121,22 @@ export default function useEditProduct({
     const addImageField = () => {
         setFormData((prev) => ({
             ...prev,
-            images: [...prev.images, ""],
+            images: [
+                ...prev.images,
+                "",
+            ],
         }));
     };
 
-    const removeImageField = (index) => {
+    const removeImageField = (
+        index
+    ) => {
         setFormData((prev) => ({
             ...prev,
             images: prev.images.filter(
                 (_, i) => i !== index
             ),
+
             imageFiles:
                 prev.imageFiles.filter(
                     (_, i) => i !== index
@@ -143,7 +147,8 @@ export default function useEditProduct({
     const toggleSwitch = (field) => {
         setFormData((prev) => ({
             ...prev,
-            [field]: !prev[field],
+            [field]:
+                !prev[field],
         }));
     };
 
@@ -168,7 +173,7 @@ export default function useEditProduct({
                             formData.description,
 
                         short_description:
-                            formData.description,
+                            formData.short_description,
 
                         mrp: formData.mrp,
 
@@ -200,15 +205,24 @@ export default function useEditProduct({
                     }
                 );
 
-            alert(response.message);
+            toast.success(
+                response?.message ||
+                "Product updated successfully"
+            );
 
             onSuccess?.();
+
+            return true;
         } catch (error) {
-            alert(
+            console.error(error);
+
+            toast.error(
                 error?.message ||
                 error?.detail ||
                 "Failed to update product"
             );
+
+            return false;
         } finally {
             setSaving(false);
         }

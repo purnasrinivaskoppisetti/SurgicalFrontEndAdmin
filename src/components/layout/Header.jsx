@@ -103,20 +103,20 @@ export default function Header() {
         </div>
 
         {/* Right */}
-        <div className="flex items-center gap-6">
+        {/* <div className="flex items-center gap-6"> */}
           {/* Search */}
-          <div className="relative hidden md:block">
-            <Search
+          {/* <div className="relative hidden md:block"> */}
+            {/* <Search
               size={14}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
+            /> */}
 
-            <input
+            {/* <input
               type="text"
               placeholder="Search orders, customers, products..."
               className="w-[350px] pl-11 pr-3 py-1 bg-gray-100 text-sm rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </div> */}
 
           {/* Profile */}
           <div
@@ -241,7 +241,7 @@ export default function Header() {
               </div>
             )}
           </div>
-        </div>
+        {/* </div> */}
       </div>
     </header>
   );

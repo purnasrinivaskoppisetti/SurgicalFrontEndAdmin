@@ -29,7 +29,7 @@ export default function OrdersPieChart({
   );
 
   return (
-    <div className="bg-white border border-slate-300 rounded-[28px] p-4 h-[430px] shadow-sm">
+    <div className="bg-white border border-slate-300 rounded-[28px] p-4 h-full shadow-sm">
       <div>
         <h2 className="text-[13px] font-bold text-[#0F172A]">
           Orders by category

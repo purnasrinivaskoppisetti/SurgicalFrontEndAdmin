@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const initialState = {
     category_id: "",
@@ -81,7 +82,7 @@ export default function useAddProduct({
                 file.type
             )
         ) {
-            alert(
+            toast.error(
                 "Only JPG, JPEG, PNG and WEBP images are allowed."
             );
 
@@ -91,7 +92,7 @@ export default function useAddProduct({
 
         // File size validation
         if (file.size > MAX_FILE_SIZE) {
-            alert(
+            toast.error(
                 "Image size must not exceed 3MB."
             );
 
@@ -153,7 +154,7 @@ export default function useAddProduct({
     const handleSubmit = async () => {
         try {
             if (!formData.category_id) {
-                alert(
+                toast.error(
                     "Please select category"
                 );
                 return false;
@@ -161,58 +162,60 @@ export default function useAddProduct({
 
             setLoading(true);
 
-            await handleCreateProduct({
-                category_id:
-                    formData.category_id,
+            const response =
+                await handleCreateProduct({
+                    category_id:
+                        formData.category_id,
 
-                name: formData.name,
+                    name: formData.name,
 
-                description:
-                    formData.description,
+                    description:
+                        formData.description,
 
-                short_description:
-                    formData.short_description,
+                    short_description:
+                        formData.short_description,
 
-                brand: formData.brand,
+                    brand: formData.brand,
 
-                mrp: Number(
-                    formData.mrp
-                ),
-
-                sale_price: Number(
-                    formData.sale_price
-                ),
-
-                stock_qty: Number(
-                    formData.stock_qty
-                ),
-
-                sku: formData.sku,
-
-                manufacturer:
-                    formData.manufacturer,
-
-                hsn_code:
-                    formData.hsn_code,
-
-                is_featured:
-                    formData.is_featured,
-
-                is_bestseller:
-                    formData.is_bestseller,
-
-                is_new_arrival:
-                    formData.is_new_arrival,
-
-                images:
-                    formData.images.filter(
-                        Boolean
+                    mrp: Number(
+                        formData.mrp
                     ),
-            });
+
+                    sale_price: Number(
+                        formData.sale_price
+                    ),
+
+                    stock_qty: Number(
+                        formData.stock_qty
+                    ),
+
+                    sku: formData.sku,
+
+                    manufacturer:
+                        formData.manufacturer,
+
+                    hsn_code:
+                        formData.hsn_code,
+
+                    is_featured:
+                        formData.is_featured,
+
+                    is_bestseller:
+                        formData.is_bestseller,
+
+                    is_new_arrival:
+                        formData.is_new_arrival,
+
+                    images:
+                        formData.images.filter(
+                            Boolean
+                        ),
+                });
 
             resetForm();
 
-            alert(
+            toast.success(
+                response?.message ||
                 "Product created successfully"
             );
 
@@ -220,7 +223,7 @@ export default function useAddProduct({
         } catch (error) {
             console.error(error);
 
-            alert(
+            toast.error(
                 error?.message ||
                 "Failed to create product"
             );

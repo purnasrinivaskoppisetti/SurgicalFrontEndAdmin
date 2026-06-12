@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState,useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { Search, Download, Plus, Truck, CheckCircle, Package, IndianRupee, MoreVertical, Filter, ChevronDown, Check, } from "lucide-react";
 export default function AllOrders({
@@ -166,7 +166,7 @@ export default function AllOrders({
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+            <div className="bg-white border border-slate-200 rounded-2xl">
                 <div className="p-2.5 flex items-center gap-3 border-b border-slate-200">
                     <div className="relative flex-1">
                         <Search

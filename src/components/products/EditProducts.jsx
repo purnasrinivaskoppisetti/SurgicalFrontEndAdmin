@@ -63,6 +63,20 @@ export default function EditProductModal({
                             className="w-full mt-2 border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none resize-none"
                         />
                     </div>
+                    <div className="col-span-2">
+                        <label className="text-sm font-semibold text-[#0f172a]">
+                            Short Description
+                        </label>
+
+                        <textarea
+                            rows={2}
+                            name="short_description"
+                            value={formData.short_description || ""}
+                            onChange={handleChange}
+                            placeholder="Product information"
+                            className="w-full mt-2 border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none resize-none"
+                        />
+                    </div>
 
                     <div>
                         <label className="text-sm font-semibold text-[#0f172a]">

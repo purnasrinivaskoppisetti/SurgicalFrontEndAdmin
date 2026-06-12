@@ -25,7 +25,7 @@ export default function RevenueChart({
   );
 
   return (
-    <div className="bg-white border border-slate-300 rounded-[20px] p-2 h-[430px] shadow-sm">
+    <div className="bg-white border border-slate-300 rounded-[20px] p-2 h-full shadow-sm">
       <div className="flex items-start justify-between mt-2 ml-2 mb-5">
         <div>
           <h2 className="text-[15px] font-bold text-[#0F172A]">
@@ -36,7 +36,6 @@ export default function RevenueChart({
             Last 14 days
           </p>
         </div>
-
         <span className="text-[12px] text-[#64748B]">
           in ₹
         </span>

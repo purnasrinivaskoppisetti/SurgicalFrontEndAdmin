@@ -1,8 +1,8 @@
 "use client";
-
+ 
 import { useState } from "react";
 import { X } from "lucide-react";
-
+ 
 export default function DeleteProductModal({
   openDeleteModal,
   setOpenDeleteModal,
@@ -11,28 +11,28 @@ export default function DeleteProductModal({
 }) {
   const [successMessage, setSuccessMessage] =
     useState("");
-
+ 
   const [errorMessage, setErrorMessage] =
     useState("");
-
+ 
   const onConfirmDelete = async () => {
     try {
       const response =
         await handleDeleteProduct(
           product?.id
         );
-
+ 
       console.log(
         "DELETE RESPONSE:",
         response
       );
-
+ 
       setOpenDeleteModal(false);
-
+ 
       setSuccessMessage(
-        response?.message
+        "Delete Successful"
       );
-
+ 
       setTimeout(() => {
         setSuccessMessage("");
       }, 2000);
@@ -41,19 +41,19 @@ export default function DeleteProductModal({
         "DELETE ERROR:",
         error
       );
-
+ 
       setErrorMessage(
         error?.response?.data
           ?.message ||
-          error?.message
+        error?.message
       );
-
+ 
       setTimeout(() => {
         setErrorMessage("");
       }, 2000);
     }
   };
-
+ 
   if (
     !openDeleteModal &&
     !successMessage &&
@@ -61,20 +61,37 @@ export default function DeleteProductModal({
   ) {
     return null;
   }
-
+ 
   return (
     <>
-      {/* SUCCESS POPUP */}
+      {/* SUCCESS TOAST */}
       {successMessage && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center">
-          <div className="bg-green-500 text-white px-6 py-2 rounded-xl shadow-xl text-center min-w-[280px]">
-            <p className="font-medium text-lg">
-              {successMessage}
+        <div className="fixed top-4 right-4 z-[99999]">
+          <div className="flex items-center gap-4 min-w-[240px] px-4 py-4 rounded-2xl border border-green-200 bg-green-50 shadow-sm">
+            <div className="flex items-center justify-center w-4 h-4 rounded-full bg-green-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={3}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+ 
+            <p className="text-[13px] font-semibold text-green-700">
+              Delete Successful
             </p>
           </div>
         </div>
       )}
-
+ 
       {/* ERROR POPUP */}
       {errorMessage && (
         <div className="fixed inset-0 z-[99999] flex items-center justify-center">
@@ -85,7 +102,7 @@ export default function DeleteProductModal({
           </div>
         </div>
       )}
-
+ 
       {/* DELETE MODAL */}
       {openDeleteModal && (
         <div className="fixed inset-0 z-[999] bg-black/60 flex items-center justify-center">
@@ -100,18 +117,18 @@ export default function DeleteProductModal({
             >
               <X size={18} />
             </button>
-
+ 
             <h2 className="text-[15px] font-semibold text-[#111827] mb-6">
               Delete "
               {product?.name}"?
             </h2>
-
+ 
             <p className="text-[13px] text-gray-500 mb-8">
               This product will be
               removed from the
               catalog and frontend.
             </p>
-
+ 
             <div className="flex justify-end gap-4">
               <button
                 onClick={() =>
@@ -123,7 +140,7 @@ export default function DeleteProductModal({
               >
                 Cancel
               </button>
-
+ 
               <button
                 onClick={
                   onConfirmDelete
@@ -139,3 +156,4 @@ export default function DeleteProductModal({
     </>
   );
 }
+ 
