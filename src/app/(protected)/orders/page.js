@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import AllOrders from "@/components/orders/Allorders";
 import OrderDetailsDrawer from "@/components/orders/orderdetails/OrderDetails";
+import Pagination from "@/components/common/Pagination";
+
 import useOrders from "@/hooks/orders/useOrders";
 
 export default function OrdersPage() {
@@ -21,6 +24,8 @@ export default function OrdersPage() {
         handleUpdateOrderStatus,
     } = useOrders();
 
+    const [page, setPage] = useState(1);
+
     const [search, setSearch] = useState("");
 
     const [deliveryFilter, setDeliveryFilter] =
@@ -35,7 +40,7 @@ export default function OrdersPage() {
     useEffect(() => {
         const timer = setTimeout(() => {
             fetchOrders({
-                page: 1,
+                page,
                 page_size: 20,
                 search,
                 status: deliveryFilter,
@@ -45,10 +50,19 @@ export default function OrdersPage() {
 
         return () => clearTimeout(timer);
     }, [
+        page,
         search,
         deliveryFilter,
         paymentFilter,
         fetchOrders,
+    ]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [
+        search,
+        deliveryFilter,
+        paymentFilter,
     ]);
 
     const handleOpenOrderDetails = async (
@@ -83,6 +97,14 @@ export default function OrdersPage() {
                 onOrderClick={
                     handleOpenOrderDetails
                 }
+            />
+
+            <Pagination
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                pagination={pagination}
+                totalItems={pagination?.total || 0}
             />
 
             <OrderDetailsDrawer

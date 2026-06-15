@@ -30,7 +30,10 @@ export default function useOrders() {
 
     const [pagination, setPagination] =
         useState({
-            page: 1,
+            current_page: 1,
+            total_pages: 1,
+            has_previous: false,
+            has_next: false,
             page_size: 20,
             total: 0,
         });
@@ -84,18 +87,52 @@ export default function useOrders() {
                     }
                 );
 
+                const apiPagination =
+                    data.pagination || {};
+
+                const currentPage =
+                    apiPagination.current_page ||
+                    apiPagination.page ||
+                    page;
+
+                const pageSize =
+                    apiPagination.page_size ||
+                    page_size;
+
+                const total =
+                    apiPagination.total ||
+                    ordersData.length;
+
+                const totalPages =
+                    apiPagination.total_pages ||
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            total / pageSize
+                        )
+                    );
+
                 setPagination({
-                    page:
-                        data.pagination
-                            ?.page || page,
+                    current_page:
+                        currentPage,
+
+                    total_pages:
+                        totalPages,
+
+                    has_previous:
+                        apiPagination.has_previous ??
+                        currentPage > 1,
+
+                    has_next:
+                        apiPagination.has_next ??
+                        currentPage <
+                            totalPages,
+
                     page_size:
-                        data.pagination
-                            ?.page_size ||
-                        page_size,
+                        pageSize,
+
                     total:
-                        data.pagination
-                            ?.total ||
-                        ordersData.length,
+                        total,
                 });
 
                 return response;

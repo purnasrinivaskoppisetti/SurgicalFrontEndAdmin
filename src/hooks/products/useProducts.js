@@ -25,7 +25,7 @@ export default function useProducts() {
     const [pagination, setPagination] =
         useState({
             current_page: 1,
-            page_size: 20,
+            page_size: 8,
             total_records: 0,
             total_pages: 1,
             has_next: false,
@@ -40,7 +40,7 @@ export default function useProducts() {
             const response =
                 await getProducts({
                     page,
-                    page_size: 20,
+                    page_size: 8,
                     search,
                     category_id:
                         categoryId,
@@ -53,7 +53,7 @@ export default function useProducts() {
             setPagination(
                 response?.pagination || {
                     current_page: 1,
-                    page_size: 20,
+                    page_size: 8,
                     total_records: 0,
                     total_pages: 1,
                     has_next: false,
