@@ -56,7 +56,7 @@ export default function Pagination({
                             <>
                                 <button
                                     onClick={() => setPage(1)}
-                                    className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                    className="text-xs font-medium text-slate-500 hover:text-slate-700"
                                 >
                                     1
                                 </button>
@@ -74,7 +74,7 @@ export default function Pagination({
                                         currentPage - 2
                                     )
                                 }
-                                className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                className="text-xs font-medium text-slate-500 hover:text-slate-700"
                             >
                                 {currentPage - 2}
                             </button>
@@ -87,14 +87,14 @@ export default function Pagination({
                                         currentPage - 1
                                     )
                                 }
-                                className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                className="text-xs font-medium text-slate-500 hover:text-slate-700"
                             >
                                 {currentPage - 1}
                             </button>
                         )}
 
                         {/* Active Page */}
-                        <button className="w-9 h-9 rounded-full bg-blue-500 text-white font-semibold flex items-center justify-center">
+                        <button className="w-5 h-3 rounded-full bg-blue-500 text-white font-medium text-xs flex items-center justify-center">
                             {currentPage}
                         </button>
 
@@ -105,7 +105,7 @@ export default function Pagination({
                                         currentPage + 1
                                     )
                                 }
-                                className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                className="text-xs font-medium text-slate-500 hover:text-slate-700"
                             >
                                 {currentPage + 1}
                             </button>
@@ -118,7 +118,7 @@ export default function Pagination({
                                         currentPage + 2
                                     )
                                 }
-                                className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                className="text-xs font-medium text-slate-500 hover:text-slate-700"
                             >
                                 {currentPage + 2}
                             </button>
@@ -137,7 +137,7 @@ export default function Pagination({
                                                 totalPages
                                             )
                                         }
-                                        className="text-sm font-medium text-slate-500 hover:text-slate-700"
+                                        className="text-xs font-medium text-slate-500 hover:text-slate-700"
                                     >
                                         {totalPages}
                                     </button>

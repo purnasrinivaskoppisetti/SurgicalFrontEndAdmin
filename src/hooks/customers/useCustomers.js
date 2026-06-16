@@ -8,7 +8,6 @@ import {
 
 export default function useCustomers(
   page,
-  pageSize,
   search
 ) {
   const [customers, setCustomers] = useState([]);
@@ -22,6 +21,9 @@ export default function useCustomers(
   const [detailsLoading, setDetailsLoading] =
     useState(false);
 
+  // Change this value whenever you want a different page size
+  const [pageSize] = useState(10);
+
   const fetchCustomers = async () => {
     try {
       setLoading(true);
@@ -32,11 +34,34 @@ export default function useCustomers(
         search,
       });
 
-      setCustomers(response?.data?.customers || []);
-      setSummary(response?.data?.summary || {});
-      setPagination(
-        response?.data?.pagination || {}
+      setCustomers(
+        response?.data?.customers || []
       );
+
+      setSummary(
+        response?.data?.summary || {}
+      );
+
+      const apiPagination =
+        response?.data?.pagination || {};
+
+      const totalPages = Math.ceil(
+        (apiPagination?.total || 0) /
+          (apiPagination?.page_size ||
+            pageSize)
+      );
+
+      setPagination({
+        ...apiPagination,
+        current_page:
+          apiPagination?.page || 1,
+        total_pages: totalPages,
+        has_previous:
+          (apiPagination?.page || 1) > 1,
+        has_next:
+          (apiPagination?.page || 1) <
+          totalPages,
+      });
     } catch (error) {
       console.error(
         "Customers API Error:",
@@ -77,7 +102,7 @@ export default function useCustomers(
 
   useEffect(() => {
     fetchCustomers();
-  }, [page, pageSize, search]);
+  }, [page, search]);
 
   return {
     customers,

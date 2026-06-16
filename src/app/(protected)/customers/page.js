@@ -5,18 +5,19 @@ import { useState } from "react";
 import Customers from "../../../components/customers/Allcustomers";
 import CustomersTable from "../../../components/customers/CustomerTable";
 import CustomerDetailsDrawer from "../../../components/customers/CustomerDetails";
+import Pagination from "@/components/common/Pagination";
 
 import useCustomers from "@/hooks/customers/useCustomers";
 
 export default function CustomersPage() {
   const [search, setSearch] = useState("");
 
-  const [page] = useState(1);
-  const [pageSize] = useState(20);
+  const [page, setPage] = useState(1);
 
   const {
     customers,
     summary,
+    pagination,
     loading,
 
     selectedCustomer,
@@ -24,7 +25,6 @@ export default function CustomersPage() {
     clearSelectedCustomer,
   } = useCustomers(
     page,
-    pageSize,
     search
   );
 
@@ -42,6 +42,14 @@ export default function CustomersPage() {
             customer.id
           )
         }
+      />
+
+      <Pagination
+        loading={loading}
+        page={page}
+        setPage={setPage}
+        pagination={pagination}
+        totalItems={pagination?.total || 0}
       />
 
       <CustomerDetailsDrawer

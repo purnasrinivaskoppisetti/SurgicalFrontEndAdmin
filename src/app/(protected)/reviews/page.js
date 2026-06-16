@@ -16,6 +16,8 @@ export default function ReviewsPage() {
     page,
     setPage,
 
+    pagination, // <-- add
+
     handleApproveReview,
     handleRejectReview,
     handleFlagReview,
@@ -31,15 +33,10 @@ export default function ReviewsPage() {
       setStatus={setStatus}
       page={page}
       setPage={setPage}
-      handleApproveReview={
-        handleApproveReview
-      }
-      handleRejectReview={
-        handleRejectReview
-      }
-      handleFlagReview={
-        handleFlagReview
-      }
+      pagination={pagination} // <-- add
+      handleApproveReview={handleApproveReview}
+      handleRejectReview={handleRejectReview}
+      handleFlagReview={handleFlagReview}
     />
   );
 }

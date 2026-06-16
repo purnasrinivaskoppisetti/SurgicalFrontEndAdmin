@@ -34,16 +34,6 @@ export default function PricingSection({
                 </div>
 
                 <div className="flex justify-between">
-                    <span>GST</span>
-
-                    <span>
-                        {formatCurrency(
-                            pricing?.gst
-                        )}
-                    </span>
-                </div>
-
-                <div className="flex justify-between">
                     <span>
                         Discount
                     </span>

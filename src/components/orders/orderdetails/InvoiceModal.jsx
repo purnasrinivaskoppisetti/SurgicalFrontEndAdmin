@@ -3,305 +3,420 @@
 import { X } from "lucide-react";
 
 export default function InvoiceModal({
-    order,
-    setOpenInvoice,
+  order,
+  setOpenInvoice,
 }) {
-    const formatCurrency = (value) =>
-        `₹${Number(value || 0).toLocaleString(
-            "en-IN"
-        )}`;
+  const formatCurrency = (value) =>
+    `₹${Number(value || 0).toLocaleString(
+      "en-IN"
+    )}`;
 
-    return (
-        <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-6">
-            <div className="relative w-full max-w-[760px] max-h-[92vh] overflow-y-auto bg-white shadow-xl px-16 py-12 text-[#222]">
-                {/* Close Button */}
-                <button
-                    onClick={() =>
-                        setOpenInvoice(false)
-                    }
-                    className="absolute top-4 right-4 h-8 w-8 rounded-full border border-slate-300 flex items-center justify-center hover:bg-slate-50"
-                >
-                    <X size={18} />
-                </button>
+  const fullAddress = [
+    order?.shipping_address?.address_line1,
+    order?.shipping_address?.address_line2,
+    order?.shipping_address?.city,
+    order?.shipping_address?.state,
+    order?.shipping_address?.pincode,
+    order?.shipping_address?.country,
+  ]
+    .filter(Boolean)
+    .join(", ");
 
-                {/* Header */}
-                <div className="flex justify-between items-start">
-                    <div>
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold">
-                            Medical & Surgical Supplies
-                        </p>
+  return (
+    <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4">
+      <div className="relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto">
 
-                        <h1 className="text-[42px] leading-none font-bold tracking-tight mt-4">
-                            INVOICE
-                        </h1>
-                    </div>
+        {/* Close */}
+        <button
+          onClick={() =>
+            setOpenInvoice(false)
+          }
+          className="absolute top-4 right-4"
+        >
+          <X size={20} />
+        </button>
 
-                    <div className="text-right text-[13px] leading-5 text-slate-700">
-                        <p>Surgical World</p>
-                        <p>102, MG Road, Mumbai</p>
-                        <p>Mumbai, Maharashtra</p>
-                        <p>+91 9498888888</p>
-                    </div>
-                </div>
+        <div className="p-8">
 
-                {/* Invoice Details */}
-                <div className="grid grid-cols-3 gap-8 mt-14">
-                    <div>
-                        <h3 className="text-[13px] font-semibold">
-                            Billed To
-                        </h3>
+          {/* HEADER */}
+          <div className="border-b border-black pb-4">
+            <h1 className="text-4xl font-bold">
+              SURGICAL WORLD
+            </h1>
 
-                        <div className="text-[13px] leading-5 mt-1 text-slate-700">
-                            <p>
-                                {order.customer?.name}
-                            </p>
+            <p className="text-sm">
+              Medical & Surgical Supplies
+            </p>
 
-                            <p>
-                                {
-                                    order
-                                        .shipping_address
-                                        ?.address
-                                }
-                            </p>
+            <p className="text-sm">
+              Mumbai, Maharashtra
+            </p>
 
-                            <p>
-                                {
-                                    order.customer
-                                        ?.email
-                                }
-                            </p>
+            <p className="text-sm">
+              +91 9498888888
+            </p>
+          </div>
 
-                            <p>
-                                {
-                                    order
-                                        .shipping_address
-                                        ?.phone
-                                }
-                            </p>
-                        </div>
-                    </div>
+          {/* TITLE */}
+          <div className="text-center mt-6">
+            <h2 className="text-2xl font-bold">
+              TAX INVOICE
+            </h2>
+          </div>
 
-                    <div>
-                        <h3 className="text-[13px] font-semibold">
-                            Date Issued
-                        </h3>
+          {/* CUSTOMER + INVOICE DETAILS */}
+          <div className="grid grid-cols-2 gap-10 border-y border-black py-5 mt-5">
 
-                        <p className="text-[13px] mt-1 text-slate-700">
-                            {new Date().toLocaleDateString()}
-                        </p>
+            {/* Customer Details */}
+            <div>
+              <h3 className="font-bold text-lg mb-3">
+                Customer Details
+              </h3>
 
-                        <h3 className="text-[13px] font-semibold mt-8">
-                            Invoice Number
-                        </h3>
+              <p>
+                <strong>Name:</strong>{" "}
+                {order?.customer?.name || "-"}
+              </p>
 
-                        <p className="text-[13px] mt-1 text-slate-700">
-                            INV-
-                            {
-                                order.order_number
-                            }
-                        </p>
-                    </div>
+              <p>
+                <strong>Email:</strong>{" "}
+                {order?.customer?.email || "-"}
+              </p>
 
-                    <div className="text-right">
-                        <h3 className="text-[13px] font-semibold">
-                            Due Date
-                        </h3>
+              <p>
+                <strong>Phone:</strong>{" "}
+                {order?.shipping_address?.phone ||
+                  "-"}
+              </p>
 
-                        <p className="text-[13px] mt-1 text-slate-700">
-                            -
-                        </p>
-
-                        <h3 className="text-[13px] font-semibold mt-12">
-                            Amount Due
-                        </h3>
-
-                        <p className="text-[14px] mt-1 font-semibold">
-                            {formatCurrency(
-                                order.pricing
-                                    ?.grand_total
-                            )}
-                        </p>
-                    </div>
-                </div>
-
-                {/* Products Table */}
-                <div className="mt-14">
-                    <div className="border-t-2 border-black"></div>
-
-                    <div className="grid grid-cols-[1fr_120px_80px_120px] text-[12px] py-4">
-                        <div>Description</div>
-
-                        <div className="text-right">
-                            Rate
-                        </div>
-
-                        <div className="text-center">
-                            Qty
-                        </div>
-
-                        <div className="text-right">
-                            Amount
-                        </div>
-                    </div>
-
-                    {order.items?.map(
-                        (product) => (
-                            <div
-                                key={
-                                    product.product_id
-                                }
-                                className="grid grid-cols-[1fr_120px_80px_120px] text-[13px] py-2 text-slate-700"
-                            >
-                                <div>
-                                    {
-                                        product.product_name
-                                    }
-                                </div>
-
-                                <div className="text-right">
-                                    {formatCurrency(
-                                        product.price
-                                    )}
-                                </div>
-
-                                <div className="text-center">
-                                    {
-                                        product.quantity
-                                    }
-                                </div>
-
-                                <div className="text-right">
-                                    {formatCurrency(
-                                        product.total
-                                    )}
-                                </div>
-                            </div>
-                        )
-                    )}
-
-                    <div className="grid grid-cols-[1fr_120px_80px_120px] text-[12px] py-4 text-slate-700">
-                        <div></div>
-
-                        <div className="text-right">
-                            +Tax
-                        </div>
-
-                        <div></div>
-
-                        <div></div>
-                    </div>
-                </div>
-
-                {/* Summary */}
-                <div className="flex justify-end mt-6">
-                    <div className="w-[320px]">
-                        <div className="flex justify-between text-[13px] py-2">
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <span>
-                                {formatCurrency(
-                                    order
-                                        .pricing
-                                        ?.subtotal
-                                )}
-                            </span>
-                        </div>
-
-                        <div className="flex justify-between text-[13px] py-2">
-                            <span>GST</span>
-
-                            <span>
-                                {formatCurrency(
-                                    order
-                                        .pricing
-                                        ?.gst
-                                )}
-                            </span>
-                        </div>
-
-                        <div className="flex justify-between text-[13px] py-2 text-emerald-600">
-                            <span>
-                                Discount
-                            </span>
-
-                            <span>
-                                -
-                                {formatCurrency(
-                                    order
-                                        .pricing
-                                        ?.discount
-                                )}
-                            </span>
-                        </div>
-
-                        <div className="border-t border-black mt-2"></div>
-
-                        <div className="flex justify-between text-[13px] py-3">
-                            <span>Total</span>
-
-                            <span>
-                                {formatCurrency(
-                                    order
-                                        .pricing
-                                        ?.grand_total
-                                )}
-                            </span>
-                        </div>
-
-                        <div className="border-t-2 border-black"></div>
-
-                        <div className="flex justify-between text-[13px] font-bold py-3">
-                            <span>
-                                Balance Due
-                            </span>
-
-                            <span>
-                                {formatCurrency(
-                                    order
-                                        .pricing
-                                        ?.grand_total
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Notes */}
-                <div className="mt-20">
-                    <h3 className="text-[13px] font-semibold">
-                        Notes
-                    </h3>
-
-                    <p className="text-[13px] mt-1 text-slate-700">
-                        Thank you for
-                        choosing Surgical
-                        World.
-                    </p>
-
-                    <h3 className="text-[13px] font-semibold mt-7">
-                        Terms
-                    </h3>
-
-                    <p className="text-[13px] mt-1 text-slate-700">
-                        Please pay the
-                        total amount due
-                        by the invoice due
-                        date.
-                    </p>
-                </div>
-
-                {/* Footer */}
-                <div className="text-center text-[11px] text-slate-500 mt-28">
-                    <p>Page 1 of 1</p>
-
-                    <p className="text-blue-500 mt-1">
-                        Made with Surgical
-                        World
-                    </p>
-                </div>
+              <p>
+                <strong>Address:</strong>{" "}
+                {fullAddress || "-"}
+              </p>
             </div>
+
+            {/* Invoice Details */}
+            <div>
+              <h3 className="font-bold text-lg mb-3">
+                Invoice Details
+              </h3>
+
+              <p>
+                <strong>Order No:</strong>{" "}
+                {order?.order_number || "-"}
+              </p>
+
+              <p>
+                <strong>Invoice No:</strong>{" "}
+                INV-
+                {order?.order_number || "-"}
+              </p>
+
+              <p>
+                <strong>Invoice Date:</strong>{" "}
+                {order?.order_date
+                  ? new Date(
+                      order.order_date
+                    ).toLocaleDateString(
+                      "en-IN"
+                    )
+                  : "-"}
+              </p>
+
+              <p>
+                <strong>Status:</strong>{" "}
+                {order?.status || "-"}
+              </p>
+
+              <p>
+                <strong>Payment Status:</strong>{" "}
+                {order?.payment_status ||
+                  "-"}
+              </p>
+            </div>
+          </div>
+
+          {/* DETAILED BREAKUP */}
+          <div className="mt-8">
+            <h3 className="font-bold text-xl mb-3">
+              Detailed Breakup
+            </h3>
+
+            <table className="w-full border-collapse border border-black">
+              <thead>
+                <tr>
+                  <th className="border border-black p-2">
+                    No.
+                  </th>
+
+                  <th className="border border-black p-2">
+                    SKU
+                  </th>
+
+                  <th className="border border-black p-2 text-left">
+                    Particulars
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Rate
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Units
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {order?.items?.map(
+                  (item, index) => (
+                    <tr
+                      key={
+                        item.order_item_id
+                      }
+                    >
+                      <td className="border border-black p-2 text-center">
+                        {index + 1}
+                      </td>
+
+                      <td className="border border-black p-2">
+                        {item.product_sku}
+                      </td>
+
+                      <td className="border border-black p-2">
+                        {
+                          item.product_name
+                        }
+                      </td>
+
+                      <td className="border border-black p-2 text-right">
+                        {formatCurrency(
+                          item.price
+                        )}
+                      </td>
+
+                      <td className="border border-black p-2 text-center">
+                        {
+                          item.quantity
+                        }
+                      </td>
+
+                      <td className="border border-black p-2 text-right">
+                        {formatCurrency(
+                          item.total
+                        )}
+                      </td>
+                    </tr>
+                  )
+                )}
+
+                {!order?.items?.length && (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="border border-black p-4 text-center"
+                    >
+                      No products found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* TOTAL SECTION */}
+          <div className="flex justify-end mt-8">
+            <div className="w-[380px] border border-black">
+
+              <div className="flex justify-between p-3 border-b border-black">
+                <span>
+                  Sub Total
+                </span>
+
+                <span>
+                  {formatCurrency(
+                    order?.pricing
+                      ?.subtotal
+                  )}
+                </span>
+              </div>
+
+              <div className="flex justify-between p-3 border-b border-black">
+                <span>GST</span>
+
+                <span>
+                  {formatCurrency(
+                    order?.pricing
+                      ?.gst
+                  )}
+                </span>
+              </div>
+
+              <div className="flex justify-between p-3 border-b border-black">
+                <span>
+                  Shipping
+                </span>
+
+                <span>
+                  {formatCurrency(
+                    order?.pricing
+                      ?.shipping
+                  )}
+                </span>
+              </div>
+
+              <div className="flex justify-between p-3 border-b border-black">
+                <span>
+                  Discount
+                </span>
+
+                <span>
+                  -
+                  {formatCurrency(
+                    order?.pricing
+                      ?.discount
+                  )}
+                </span>
+              </div>
+
+              <div className="flex justify-between p-3 font-bold text-lg">
+                <span>
+                  Net Amount
+                </span>
+
+                <span>
+                  {formatCurrency(
+                    order?.pricing
+                      ?.grand_total
+                  )}
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          {/* PAYMENT SUMMARY */}
+          <div className="mt-10">
+
+            <h3 className="font-bold text-xl mb-3">
+              Payment Summary
+            </h3>
+
+            <table className="w-full border-collapse border border-black">
+
+              <thead>
+                <tr>
+                  <th className="border border-black p-2">
+                    Receipt No
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Date
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Time
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Method
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Status
+                  </th>
+
+                  <th className="border border-black p-2">
+                    Amount
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {order?.payment?.map(
+                  (payment) => (
+                    <tr
+                      key={
+                        payment.payment_id
+                      }
+                    >
+                      <td className="border border-black p-2">
+                        -
+                      </td>
+
+                      <td className="border border-black p-2">
+                        -
+                      </td>
+
+                      <td className="border border-black p-2">
+                        -
+                      </td>
+
+                      <td className="border border-black p-2">
+                        {payment.method?.toUpperCase() ||
+                          "-"}
+                      </td>
+
+                      <td className="border border-black p-2">
+                        {payment.status ||
+                          "-"}
+                      </td>
+
+                      <td className="border border-black p-2 text-right">
+                        {formatCurrency(
+                          payment.amount
+                        )}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+
+            </table>
+
+          </div>
+
+          {/* NOTES */}
+          <div className="mt-10">
+            <h3 className="font-bold">
+              Notes
+            </h3>
+
+            <p className="mt-2 text-sm">
+              Thank you for choosing
+              Surgical World. Please
+              keep this invoice for
+              future reference.
+            </p>
+          </div>
+
+          {/* SIGNATURE */}
+          <div className="flex justify-between mt-20">
+
+            <div className="text-center">
+              <div className="border-t border-black w-48"></div>
+
+              <p className="mt-2">
+                Customer Signature
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="border-t border-black w-48"></div>
+
+              <p className="mt-2">
+                Authorized Signatory
+              </p>
+            </div>
+
+          </div>
+
         </div>
-    );
+      </div>
+    </div>
+  );
 }

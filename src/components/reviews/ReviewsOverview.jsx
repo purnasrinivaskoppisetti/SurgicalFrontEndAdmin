@@ -2,6 +2,7 @@
 
 import { Star, Flag } from "lucide-react";
 import ReviewsCards from "./ReviewsCards";
+import Pagination from "@/components/common/Pagination";
 
 export default function ReviewsHeaderAndStats({
     dashboard,
@@ -9,6 +10,11 @@ export default function ReviewsHeaderAndStats({
     loading,
     status,
     setStatus,
+
+    page,
+    setPage,
+    pagination,
+
     handleApproveReview,
     handleRejectReview,
     handleFlagReview,
@@ -102,6 +108,29 @@ export default function ReviewsHeaderAndStats({
                 handleApproveReview={handleApproveReview}
                 handleRejectReview={handleRejectReview}
                 handleFlagReview={handleFlagReview}
+            />
+
+            <Pagination
+                loading={loading}
+                page={page}
+                setPage={setPage}
+                pagination={{
+                    ...pagination,
+                    current_page:
+                        pagination?.current_page ||
+                        pagination?.page ||
+                        1,
+                    has_previous:
+                        (pagination?.current_page ||
+                            pagination?.page ||
+                            1) > 1,
+                    has_next:
+                        (pagination?.current_page ||
+                            pagination?.page ||
+                            1) <
+                        (pagination?.total_pages || 1),
+                }}
+                totalItems={pagination?.total_items || 0}
             />
         </div>
     );

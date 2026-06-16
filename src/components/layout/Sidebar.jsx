@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { removeToken } from "@/utils/cookies";
+import { removeStorage } from "@/utils/storage";
 
 import {
   LayoutDashboard,
@@ -74,8 +76,14 @@ export default function Sidebar({
   const pathname = usePathname();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/");
+    // Remove auth cookie
+    removeToken();
+
+    // Remove user data
+    removeStorage("adminUser");
+
+    // Redirect to login page
+    router.replace("/");
   };
 
   return (
@@ -109,8 +117,7 @@ export default function Sidebar({
           {menuItems.map((item) => {
             const Icon = item.icon;
 
-            const isActive =
-              pathname === item.href;
+            const isActive = pathname === item.href;
 
             return (
               <li key={item.name}>

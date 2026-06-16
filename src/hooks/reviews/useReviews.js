@@ -19,7 +19,7 @@ export default function useReviews() {
 
   const [page, setPage] = useState(1);
 
-  const [pageSize] = useState(20);
+  const [pageSize] = useState(10);
 
   const [pagination, setPagination] = useState(null);
 
@@ -29,8 +29,7 @@ export default function useReviews() {
 
   const fetchDashboard = async () => {
     try {
-      const response =
-        await getReviewsDashboard();
+      const response = await getReviewsDashboard();
 
       setDashboard(response?.data || null);
     } catch (error) {
@@ -50,9 +49,17 @@ export default function useReviews() {
 
       setReviews(response?.data || []);
 
-      setPagination(
-        response?.pagination || null
-      );
+      const apiPagination = response?.pagination;
+
+      setPagination({
+        ...apiPagination,
+        current_page: apiPagination?.page || 1,
+        has_previous:
+          (apiPagination?.page || 1) > 1,
+        has_next:
+          (apiPagination?.page || 1) <
+          (apiPagination?.total_pages || 1),
+      });
     } catch (error) {
       console.error(
         "Reviews fetch failed",
@@ -65,8 +72,7 @@ export default function useReviews() {
 
   const handleApproveReview = async (id) => {
     try {
-      const response =
-        await approveReview(id);
+      const response = await approveReview(id);
 
       await fetchReviews();
       await fetchDashboard();
@@ -87,8 +93,7 @@ export default function useReviews() {
 
   const handleRejectReview = async (id) => {
     try {
-      const response =
-        await rejectReview(id);
+      const response = await rejectReview(id);
 
       await fetchReviews();
       await fetchDashboard();
@@ -109,8 +114,7 @@ export default function useReviews() {
 
   const handleFlagReview = async (id) => {
     try {
-      const response =
-        await flagReview(id);
+      const response = await flagReview(id);
 
       await fetchReviews();
       await fetchDashboard();
@@ -132,6 +136,10 @@ export default function useReviews() {
   useEffect(() => {
     fetchDashboard();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [status]);
 
   useEffect(() => {
     fetchReviews();
