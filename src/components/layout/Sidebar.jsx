@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { removeToken } from "@/utils/cookies";
@@ -16,7 +17,6 @@ import {
   Ticket,
   LogOut,
   ChevronLeft,
-  Stethoscope,
   Settings,
 } from "lucide-react";
 
@@ -76,26 +76,24 @@ export default function Sidebar({
   const pathname = usePathname();
 
   const handleLogout = () => {
-    // Remove auth cookie
     removeToken();
-
-    // Remove user data
     removeStorage("adminUser");
-
-    // Redirect to login page
     router.replace("/");
   };
 
   return (
     <aside
-      className={`h-screen bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${
-        collapsed ? "w-[80px]" : "w-[250px]"
-      }`}
+      className={`h-screen bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ${collapsed ? "w-[80px]" : "w-[250px]"
+        }`}
     >
       {/* Logo */}
       <div className="h-14 border-b border-gray-200 px-5 flex items-center gap-4 flex-shrink-0">
-        <div className="w-9.5 h-9.5 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white">
-          <Stethoscope size={18} />
+        <div className="w-11 h-11 flex items-center justify-center flex-shrink-0">
+          <img
+            src="/S_logo.png"
+            alt="Surgical World Logo"
+            className="w-full h-full object-contain"
+          />
         </div>
 
         {!collapsed && (
@@ -117,17 +115,17 @@ export default function Sidebar({
           {menuItems.map((item) => {
             const Icon = item.icon;
 
-            const isActive = pathname === item.href;
+            const isActive =
+              pathname === item.href;
 
             return (
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className={`w-full flex items-center rounded-2xl transition-all py-2 px-2 ${
-                    isActive
+                  className={`w-full flex items-center rounded-2xl transition-all py-2 px-2 ${isActive
                       ? "bg-blue-100 text-blue-600"
                       : "text-slate-800 hover:bg-blue-100 hover:text-blue-600"
-                  }`}
+                    }`}
                 >
                   <div className="w-[17px] flex justify-center flex-shrink-0">
                     <Icon size={17} />
@@ -163,14 +161,17 @@ export default function Sidebar({
         </button>
 
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() =>
+            setCollapsed(!collapsed)
+          }
           className="w-full mt-3 flex items-center justify-center gap-2 text-xs text-gray-500 hover:bg-gray-100 rounded-xl py-2"
         >
           <ChevronLeft
             size={13}
-            className={`transition-transform duration-300 ${
-              collapsed ? "rotate-180" : ""
-            }`}
+            className={`transition-transform duration-300 ${collapsed
+                ? "rotate-180"
+                : ""
+              }`}
           />
 
           {!collapsed && "Collapse"}

@@ -3,35 +3,35 @@ export default function ProductsTable({
     formatCurrency,
 }) {
     return (
-        <div className="mt-8">
-            <h3 className="font-bold text-xl mb-3">
+        <div className="mt-3">
+            <h3 className="font-bold text-base mb-2">
                 Detailed Breakup
             </h3>
-
-            <table className="w-full border-collapse border border-black">
+            
+            <table className="w-full p-1 border-collapse border border-black">
                 <thead>
                     <tr>
-                        <th className="border border-black p-2">
+                        <th className="border text-sm p-1 border-black">
                             No.
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black text-sm p-1">
                             SKU
                         </th>
 
-                        <th className="border border-black p-2 text-left">
+                        <th className="border border-black text-sm p-1">
                             Particulars
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black text-sm p-1">
                             Rate
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black text-sm p-1">
                             Units
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black text-sm p-1">
                             Amount
                         </th>
                     </tr>
@@ -40,29 +40,29 @@ export default function ProductsTable({
                 <tbody>
                     {items?.map((item, index) => (
                         <tr key={item.order_item_id}>
-                            <td className="border border-black p-2 text-center">
+                            <td className="border border-black text-xs p-1 text-center">
                                 {index + 1}
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 {item.product_sku}
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 {item.product_name}
                             </td>
 
-                            <td className="border border-black p-2 text-right">
+                            <td className="border border-black text-xs p-1 text-right">
                                 {formatCurrency(
                                     item.price
                                 )}
                             </td>
 
-                            <td className="border border-black p-2 text-center">
+                            <td className="border border-black text-xs p-1 text-center">
                                 {item.quantity}
                             </td>
 
-                            <td className="border border-black p-2 text-right">
+                            <td className="border border-black text-xs p-1 text-right">
                                 {formatCurrency(
                                     item.total
                                 )}
@@ -74,7 +74,7 @@ export default function ProductsTable({
                         <tr>
                             <td
                                 colSpan={6}
-                                className="border border-black p-4 text-center"
+                                className="border border-black text-sm p-4 text-center"
                             >
                                 No products found
                             </td>

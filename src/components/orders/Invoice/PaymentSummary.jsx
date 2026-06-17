@@ -3,35 +3,35 @@ export default function PaymentSummary({
     formatCurrency,
 }) {
     return (
-        <div className="mt-10">
-            <h3 className="font-bold text-xl mb-3">
+        <div className="mt-4">
+            <h3 className="font-bold text-base mb-3">
                 Payment Summary
             </h3>
 
             <table className="w-full border-collapse border border-black">
                 <thead>
-                    <tr>
-                        <th className="border border-black p-2">
+                    <tr className="text-sm">
+                        <th className="border border-black p-1">
                             Receipt No
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black p-1">
                             Date
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black p-1">
                             Time
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black p-1">
                             Method
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black p-1">
                             Status
                         </th>
 
-                        <th className="border border-black p-2">
+                        <th className="border border-black p-1">
                             Amount
                         </th>
                     </tr>
@@ -40,29 +40,29 @@ export default function PaymentSummary({
                 <tbody>
                     {payments?.map((payment) => (
                         <tr key={payment.payment_id}>
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 -
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 -
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 -
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 {payment.method?.toUpperCase() ||
                                     "-"}
                             </td>
 
-                            <td className="border border-black p-2">
+                            <td className="border border-black text-xs p-1">
                                 {payment.status ||
                                     "-"}
                             </td>
 
-                            <td className="border border-black p-2 text-right">
+                            <td className="border border-black text-xs p-1 text-right">
                                 {formatCurrency(
                                     payment.amount
                                 )}

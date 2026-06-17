@@ -94,7 +94,7 @@ export default function Pagination({
                         )}
 
                         {/* Active Page */}
-                        <button className="w-5 h-3 rounded-full bg-blue-500 text-white font-medium text-xs flex items-center justify-center">
+                        <button className="w-5 h-5 rounded-full bg-blue-500 text-white font-medium text-xs flex items-center justify-center">
                             {currentPage}
                         </button>
 

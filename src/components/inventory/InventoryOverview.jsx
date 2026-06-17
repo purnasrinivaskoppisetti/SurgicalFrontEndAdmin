@@ -34,13 +34,13 @@ export default function InventoryOverview({
       bg: "bg-[#FBE4E4]",
       iconColor: "text-[#EF4444]",
     },
-    {
-      title: "STOCK MOVEMENTS",
-      value: `${summary?.stock_movements_today ?? 0} today`,
-      icon: <RotateCcw size={17} />,
-      bg: "bg-[#DCFCE7]",
-      iconColor: "text-[#22C55E]",
-    },
+    // {
+    //   title: "STOCK MOVEMENTS",
+    //   value: `${summary?.stock_movements_today ?? 0} today`,
+    //   icon: <RotateCcw size={17} />,
+    //   bg: "bg-[#DCFCE7]",
+    //   iconColor: "text-[#22C55E]",
+    // },
   ];
 
   return (
@@ -57,7 +57,7 @@ export default function InventoryOverview({
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-4 gap-5 mb-6">
+      <div className="grid grid-cols-3 gap-5 mb-6">
         {stats.map((item, index) => (
           <div
             key={index}

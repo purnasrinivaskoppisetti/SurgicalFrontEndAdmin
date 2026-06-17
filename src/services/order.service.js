@@ -15,15 +15,26 @@ export const getOrders = async ({
                 page,
                 page_size,
                 search: search || undefined,
+
                 status:
                     status &&
-                    status !==
-                        "All deliveries"
-                        ? status.toLowerCase()
+                        status !== "All deliveries"
+                        ? {
+                            Pending: "pending",
+                            Packed: "packed",
+                            Shipped: "shipped",
+                            "Out for delivery":
+                                "out_for_delivery",
+                            Delivered:
+                                "delivered",
+                            Cancelled:
+                                "cancelled",
+                        }[status]
                         : undefined,
+
                 payment_status:
                     payment_status &&
-                    payment_status !==
+                        payment_status !==
                         "All payments"
                         ? payment_status.toLowerCase()
                         : undefined,

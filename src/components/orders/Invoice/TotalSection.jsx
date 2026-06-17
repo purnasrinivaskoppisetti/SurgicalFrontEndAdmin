@@ -3,9 +3,9 @@ export default function TotalSection({
     formatCurrency,
 }) {
     return (
-        <div className="flex justify-end mt-8">
-            <div className="w-[380px] border border-black">
-                <div className="flex justify-between p-3 border-b border-black">
+        <div className="flex justify-end mt-4 border-b border-black">
+            <div className="w-[250px] text-sm">
+                <div className="flex justify-between">
                     <span>Sub Total</span>
 
                     <span>
@@ -14,18 +14,7 @@ export default function TotalSection({
                         )}
                     </span>
                 </div>
-
-                <div className="flex justify-between p-3 border-b border-black">
-                    <span>GST</span>
-
-                    <span>
-                        {formatCurrency(
-                            pricing?.gst
-                        )}
-                    </span>
-                </div>
-
-                <div className="flex justify-between p-3 border-b border-black">
+                <div className="flex justify-between">
                     <span>Shipping</span>
 
                     <span>
@@ -35,7 +24,7 @@ export default function TotalSection({
                     </span>
                 </div>
 
-                <div className="flex justify-between p-3 border-b border-black">
+                <div className="flex justify-between">
                     <span>Discount</span>
 
                     <span>
@@ -46,7 +35,7 @@ export default function TotalSection({
                     </span>
                 </div>
 
-                <div className="flex justify-between p-3 font-bold text-lg">
+                <div className="flex justify-between font-bold">
                     <span>Net Amount</span>
 
                     <span>

@@ -1,12 +1,12 @@
 export default function InvoiceFooter() {
     return (
         <>
-            <div className="mt-10">
+            <div className="mt-6">
                 <h3 className="font-bold">
                     Notes
                 </h3>
 
-                <p className="mt-2 text-sm">
+                <p className="mt-2 text-xs">
                     Thank you for choosing
                     Surgical World. Please
                     keep this invoice for
@@ -14,11 +14,11 @@ export default function InvoiceFooter() {
                 </p>
             </div>
 
-            <div className="flex justify-between mt-20">
+            <div className="flex justify-between mt-13">
                 <div className="text-center">
                     <div className="border-t border-black w-48"></div>
 
-                    <p className="mt-2">
+                    <p className="mt-2 text-xs">
                         Customer Signature
                     </p>
                 </div>
@@ -26,7 +26,7 @@ export default function InvoiceFooter() {
                 <div className="text-center">
                     <div className="border-t border-black w-48"></div>
 
-                    <p className="mt-2">
+                    <p className="mt-2 text-xs">
                         Authorized Signatory
                     </p>
                 </div>

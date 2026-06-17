@@ -31,10 +31,6 @@ export default function AbandonedCarts({
                 )}
               </p>
             </div>
-
-            <button className="h-[32px] px-4 rounded-xl border border-[#E2E8F0] bg-white text-[12px] font-semibold text-[#0F172A] shadow-sm">
-              Remind
-            </button>
           </div>
         ))}
       </div>

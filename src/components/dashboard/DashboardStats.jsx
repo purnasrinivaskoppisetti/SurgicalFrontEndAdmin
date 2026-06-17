@@ -64,44 +64,43 @@ export default function DashboardStats({
       iconColor: "text-[#2563EB]",
       positive: true,
     },
-    {
-      title: "CONVERSION RATE",
-      value: `${
-        summary.conversion_rate || 0
-      }%`,
-      change: "+0%",
-      icon: <TrendingUp size={15} />,
-      iconBg: "bg-[#DCFCE7]",
-      iconColor: "text-[#22C55E]",
-      positive: true,
-    },
-    {
-      title: "RETURNING CUSTOMERS",
-      value: `${
-        summary.returning_customers_percentage ||
-        0
-      }%`,
-      change: "+0%",
-      icon: <RefreshCcw size={15} />,
-      iconBg: "bg-[#DCE7F9]",
-      iconColor: "text-[#2563EB]",
-      positive: true,
-    },
+    // {
+    //   title: "CONVERSION RATE",
+    //   value: `${
+    //     summary.conversion_rate || 0
+    //   }%`,
+    //   change: "+0%",
+    //   icon: <TrendingUp size={15} />,
+    //   iconBg: "bg-[#DCFCE7]",
+    //   iconColor: "text-[#22C55E]",
+    //   positive: true,
+    // },
+    // {
+    //   title: "RETURNING CUSTOMERS",
+    //   value: `${
+    //     summary.returning_customers_percentage ||
+    //     0
+    //   }%`,
+    //   change: "+0%",
+    //   icon: <RefreshCcw size={15} />,
+    //   iconBg: "bg-[#DCE7F9]",
+    //   iconColor: "text-[#2563EB]",
+    //   positive: true,
+    // },
   ];
 
   return (
     <>
-      <div className="grid grid-cols-6 gap-2 mt-6">
+      <div className="grid grid-cols-4 gap-2 mt-6">
         {stats.map((item, index) => (
           <div
             key={index}
-            className="bg-white border border-[#E2E8F0] rounded-xl p-3 h-[180px] shadow-md"
+            className="bg-white border border-[#E2E8F0] rounded-xl p-3 h-[120px] shadow-md"
           >
             <div className="flex justify-between items-start">
-              <h3 className="text-xs font-semibold text-[#64748B] leading-8 max-w-[120px]">
+              <h3 className="text-xs font-semibold text-[#64748B] leading-8 max-w-[220px]">
                 {item.title}
               </h3>
-
               <div
                 className={`w-[40px] h-[40px] rounded-xl flex items-center justify-center ${item.iconBg}`}
               >
@@ -115,7 +114,7 @@ export default function DashboardStats({
               {item.value}
             </h2>
 
-            <div className="mt-3 flex items-center gap-2">
+            {/* <div className="mt-3 flex items-center gap-2">
               <span
                 className={`text-sm ${
                   item.positive
@@ -139,7 +138,7 @@ export default function DashboardStats({
               <span className="text-sm text-[#64748B]">
                 vs yesterday
               </span>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
