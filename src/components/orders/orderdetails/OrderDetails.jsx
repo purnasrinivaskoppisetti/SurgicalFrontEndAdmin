@@ -10,7 +10,7 @@ import PricingSection from "./PricingSection";
 import DeliverySection from "./DeliverySection";
 import TimelineSection from "./TimelineSection";
 import ActionButtons from "./ActionButtons";
-import InvoiceModal from "./InvoiceModal";
+import InvoiceModal from "../Invoice/InvoiceModal";
 
 export default function OrderDetailsDrawer({
     open,
